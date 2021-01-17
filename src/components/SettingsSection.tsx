@@ -7,30 +7,50 @@ import FormAlert from "./FormAlert";
 import SettingsGeneral from "./SettingsGeneral";
 import SettingsPassword from "./SettingsPassword";
 import SettingsBilling from "./SettingsBilling";
-import { useAuth } from "./../util/auth.js";
+import { useAuth } from "../util/auth.js";
+import { SectionProps } from "./Section";
+interface SettingsSectionProps extends SectionProps {
+  section: string;
+}
 
-function SettingsSection(props) {
+const SettingsSection: React.FC<SettingsSectionProps> = (props) => {
   const auth = useAuth();
-  const [formAlert, setFormAlert] = useState(null);
+  const [formAlert, setFormAlert] = useState<{
+    type: string;
+    message: string;
+  } | null>(null);
 
   // State to control whether we show a re-authentication flow
   // Required by some security sensitive actions, such as changing password.
-  const [reauthState, setReauthState] = useState({
+  const [reauthState, setReauthState] = useState<{
+    show: boolean;
+    callback?: () => void;
+  }>({
     show: false,
   });
 
-  const validSections = {
+  const validSections: { [key: string]: boolean } = {
     general: true,
     password: true,
     billing: true,
   };
 
-  const section = validSections[props.section] ? props.section : "general";
+  const section: string = validSections[props.section]
+    ? props.section
+    : "general";
 
   // Handle status of type "success", "error", or "requires-recent-login"
   // We don't treat "requires-recent-login" as an error as we handle it
   // gracefully by taking the user through a re-authentication flow.
-  const handleStatus = ({ type, message, callback }) => {
+  const handleStatus = ({
+    type,
+    message,
+    callback,
+  }: {
+    type: string;
+    message: string;
+    callback?: () => void;
+  }) => {
     if (type === "requires-recent-login") {
       // First clear any existing message
       setFormAlert(null);
@@ -89,6 +109,6 @@ function SettingsSection(props) {
       </Container>
     </Section>
   );
-}
+};
 
 export default SettingsSection;

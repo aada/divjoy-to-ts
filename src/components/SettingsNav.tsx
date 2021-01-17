@@ -2,7 +2,8 @@ import React from "react";
 import Nav from "react-bootstrap/Nav";
 import { LinkContainer } from "react-router-bootstrap";
 
-function SettingsNav(props) {
+export type SettingsNav = any;
+const SettingsNav: React.FC<SettingsNav> = (props) => {
   return (
     <Nav variant="pills" {...props}>
       <Nav.Item>
@@ -22,6 +23,6 @@ function SettingsNav(props) {
       </Nav.Item>
     </Nav>
   );
-}
+};
 
 export default SettingsNav;

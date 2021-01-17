@@ -6,17 +6,24 @@ import FormField from "./FormField";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import AuthSocial from "./AuthSocial";
-import { useAuth } from "./../util/auth.js";
+import { useAuth } from "../util/auth.js";
 import { useForm } from "react-hook-form";
-
-function ReauthModal(props) {
+interface ReauthModalProps {
+  provider: string;
+  callback: () => void;
+  onDone: () => void;
+}
+const ReauthModal: React.FC<ReauthModalProps> = (props) => {
   const auth = useAuth();
   const [pending, setPending] = useState(false);
-  const [formAlert, setFormAlert] = useState(null);
+  const [formAlert, setFormAlert] = useState<{
+    type: string;
+    message: string;
+  } | null>(null);
 
   const { register, handleSubmit, errors } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: { pass?: string }) => {
     const { pass } = data;
     setPending(true);
 
@@ -28,7 +35,7 @@ function ReauthModal(props) {
         // Let parent know we're done so they can hide modal
         props.onDone();
       })
-      .catch((error) => {
+      .catch((error: Error) => {
         // Hide pending indicator
         setPending(false);
         // Show error alert message
@@ -97,7 +104,7 @@ function ReauthModal(props) {
               props.callback();
               props.onDone();
             }}
-            onError={(message) => {
+            onError={(message: string) => {
               setFormAlert({
                 type: "error",
                 message: message,
@@ -108,6 +115,6 @@ function ReauthModal(props) {
       </Modal.Body>
     </Modal>
   );
-}
+};
 
 export default ReauthModal;

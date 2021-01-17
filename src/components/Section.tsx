@@ -1,8 +1,19 @@
-import React from "react";
+import React, { HTMLProps, HtmlHTMLAttributes } from "react";
 import BackgroundImage from "./BackgroundImage";
 import "./Section.scss";
 
-function Section(props) {
+export interface SectionProps {
+  bg: string;
+  textColor: string;
+  size: string;
+  bgImage?: string;
+  bgImageOpacity?: number;
+  bgImageRepeat?: boolean;
+}
+
+const Section: React.FC<SectionProps & React.HTMLAttributes<HTMLDivElement>> = (
+  props
+) => {
   const {
     bg,
     textColor,
@@ -17,7 +28,7 @@ function Section(props) {
   return (
     <section
       className={
-        "SectionComponent py-5 position-relative" +
+        "SectionComponent py-5 position-relative " +
         (props.bg ? ` bg-${props.bg}` : "") +
         (props.textColor ? ` text-${props.textColor}` : "") +
         (className ? ` ${className}` : "")
@@ -43,6 +54,6 @@ function Section(props) {
       </div>
     </section>
   );
-}
+};
 
 export default Section;

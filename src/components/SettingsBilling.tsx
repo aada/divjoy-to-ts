@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
 import PageLoader from "./PageLoader";
-import { useAuth } from "./../util/auth.js";
-import { useRouter } from "./../util/router.js";
-import { redirectToBilling } from "./../util/stripe.js";
+import { useAuth } from "../util/auth.js";
+import { useRouter } from "../util/router.js";
+import { redirectToBilling } from "../util/stripe.js";
 
-function SettingsBilling(props) {
+export interface SettingsBillingProps {
+  onStatus: (action: {
+    type: string;
+    message: string;
+    callback?: () => void;
+  }) => void;
+}
+const SettingsBilling: React.FC<SettingsBillingProps> = (props) => {
   const router = useRouter();
   const auth = useAuth();
   const [loading, setLoading] = useState(true);
@@ -40,6 +47,6 @@ function SettingsBilling(props) {
       )}
     </>
   );
-}
+};
 
 export default SettingsBilling;

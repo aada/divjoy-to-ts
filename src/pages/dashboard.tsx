@@ -1,8 +1,8 @@
 import React from "react";
-import DashboardSection from "./../components/DashboardSection";
-import { requireAuth } from "./../util/auth.js";
+import DashboardSection from "../components/DashboardSection";
+import { requireAuth } from "../util/auth.js";
 
-function DashboardPage(props) {
+function DashboardPage() {
   return (
     <DashboardSection
       bg="white"

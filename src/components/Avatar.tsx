@@ -1,7 +1,12 @@
 import React from "react";
 import Image from "react-bootstrap/Image";
 
-function Avatar(props) {
+export interface AvatarProps {
+  size: number;
+  src: string;
+  alt: string;
+}
+const Avatar: React.FC<AvatarProps> = (props) => {
   const { size, ...otherProps } = props;
 
   return (
@@ -14,6 +19,6 @@ function Avatar(props) {
       }}
     />
   );
-}
+};
 
 export default Avatar;

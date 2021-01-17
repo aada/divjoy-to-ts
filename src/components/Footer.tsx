@@ -1,10 +1,14 @@
 import React from "react";
-import Section from "./Section";
+import Section, { SectionProps } from "./Section";
 import Container from "react-bootstrap/Container";
-import { Link } from "./../util/router.js";
+import { Link } from "../util/router.js";
 import "./Footer.scss";
 
-function Footer(props) {
+interface FooterProps extends SectionProps {
+  logo: string;
+  copyright: string;
+}
+const Footer: React.FC<FooterProps> = (props) => {
   return (
     <Section
       bg={props.bg}
@@ -67,6 +71,6 @@ function Footer(props) {
       </Container>
     </Section>
   );
-}
+};
 
 export default Footer;
