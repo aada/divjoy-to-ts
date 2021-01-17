@@ -10,7 +10,7 @@ import { useAuth } from "../util/auth.js";
 import { useForm } from "react-hook-form";
 interface ReauthModalProps {
   provider: string;
-  callback: () => void;
+  callback?: () => void;
   onDone: () => void;
 }
 const ReauthModal: React.FC<ReauthModalProps> = (props) => {
@@ -31,7 +31,7 @@ const ReauthModal: React.FC<ReauthModalProps> = (props) => {
       .signin(auth.user.email, pass)
       .then(() => {
         // Call failed action that originally required reauth
-        props.callback();
+        props.callback && props.callback();
         // Let parent know we're done so they can hide modal
         props.onDone();
       })
@@ -101,7 +101,7 @@ const ReauthModal: React.FC<ReauthModalProps> = (props) => {
             providers={[props.provider]}
             showLastUsed={false}
             onAuth={() => {
-              props.callback();
+              props.callback && props.callback();
               props.onDone();
             }}
             onError={(message: string) => {
